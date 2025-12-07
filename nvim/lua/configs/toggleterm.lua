@@ -3,12 +3,12 @@ require("toggleterm").setup {
   open_mapping = [[<C-`>]],  -- <C-\> は Terminal-Normal 用に空けておく
   shade_terminals = true,
   direction = "float",
-  float_opts = { border = "rounded" },
+  float_opts = {
+    border = "rounded",
+    width = function() return math.floor(vim.o.columns * 0.9) end,
+    height = function() return math.floor(vim.o.lines * 0.9) end,
+  },
 }
 
--- lazygitを浮遊で
-vim.api.nvim_create_user_command("LazyGit", function()
-  local Terminal = require("toggleterm.terminal").Terminal
-  Terminal:new({ cmd = "lazygit", hidden = true, direction = "float" }):toggle()
-end, {})
+-- NOTE: LazyGit は lazygit.nvim プラグインで管理（lua/plugins/lazyvim.lua）
 
