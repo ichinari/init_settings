@@ -1,0 +1,62 @@
+#!/bin/bash
+# 3ペインレイアウト作成スクリプト
+# 左: そのまま、右上: claude実行、右下: そのまま
+
+# 現在のディレクトリを取得
+CWD=$(pwd)
+
+# 現在のペインIDを取得
+CURRENT_PANE=$(wezterm cli list --format json | jq -r '.[] | select(.is_active == true) | .pane_id')
+
+# 右側に縦分割（右上ペイン作成）
+RIGHT_TOP_PANE=$(wezterm cli split-pane --right --percent 50 --cwd "$CWD" --pane-id "$CURRENT_PANE")
+
+# 右上ペインをさらに下に分割（右下ペイン作成）
+RIGHT_BOTTOM_PANE=$(wezterm cli split-pane --bottom --percent 50 --cwd "$CWD" --pane-id "$RIGHT_TOP_PANE")
+
+# 右上ペインでclaudeを実行
+wezterm cli send-text --pane-id "$RIGHT_TOP_PANE" --no-paste "claude"
+wezterm cli send-text --pane-id "$RIGHT_TOP_PANE" --no-paste $'\n'
+
+# 元のペイン（左側）にフォーカスを戻す
+wezterm cli activate-pane --pane-id "$CURRENT_PANE"
+
+sleep 0.1
+
+# 瞬きする猫アニメーション
+blink_cat() {
+  # 静止部分を表示
+  cat << 'FRAME'
+
+  ╔═══════════════════════════════════════════════════════════════════════╗
+  ║   ██████╗ ██╗      █████╗ ██╗   ██╗ ██████╗ ██╗   ██╗████████╗        ║
+  ║   ██╔══██╗██║     ██╔══██╗╚██╗ ██╔╝██╔═══██╗██║   ██║╚══██╔══╝        ║
+  ║   ██║  ██║██║     ███████║ ╚████╔╝ ██║   ██║██║   ██║   ██║           ║
+  ║   ██║  ██║██║     ██╔══██║  ╚██╔╝  ██║   ██║██║   ██║   ██║           ║
+  ║   ██████╔╝███████╗██║  ██║   ██║   ╚██████╔╝╚██████╔╝   ██║           ║
+  ║   ╚═════╝ ╚══════╝╚═╝  ╚═╝   ╚═╝    ╚═════╝  ╚═════╝    ╚═╝           ║
+  ║                                                                       ║
+  ║            /\_/\                                                      ║
+  ║           ( o.o )   < start to write command nvim 😎                  ║
+  ║            > ^ <                                                      ║
+  ║           /|   |\                                                     ║
+  ║          (_|   |_)                                                    ║
+  ╚═══════════════════════════════════════════════════════════════════════╝
+FRAME
+
+  local eye_open='  ║           ( o.o )   < start to write command nvim 😎                  ║'
+  local eye_closed='  ║           ( -.- )   < start to write command nvim 😎                  ║'
+
+  sleep 0.8
+
+  # 瞬き（2回）
+  for i in {1..2}; do
+    # 5行上に移動して目の行だけ上書き
+    printf "\033[5A\r%s\033[5B\r" "$eye_closed"
+    sleep 0.1
+    printf "\033[5A\r%s\033[5B\r" "$eye_open"
+    sleep 0.6
+  done
+}
+
+blink_cat
