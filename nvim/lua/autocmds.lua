@@ -6,8 +6,13 @@ vim.api.nvim_create_autocmd("TermOpen", {
   callback = function()
     -- タブラインに表示しないようにbuflisted=false
     vim.bo.buflisted = false
-    -- ターミナルウィンドウを右側に固定
-    vim.cmd("wincmd L")
+    -- フロートウィンドウでない場合のみ右側に移動
+    local win = vim.api.nvim_get_current_win()
+    local config = vim.api.nvim_win_get_config(win)
+    if config.relative == "" then
+      -- 通常ウィンドウの場合のみ右側に固定
+      vim.cmd("wincmd L")
+    end
   end,
 })
 

@@ -1,6 +1,13 @@
 vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
 vim.g.mapleader = " "
 
+vim.g.netrw_hide = 0
+vim.g.netrw_list_hide = ''
+
+
+-- カスタムヘルプ用に runtimepath を追加
+vim.opt.runtimepath:append(vim.fn.stdpath("config") .. "/pack/personal/start/my-custom-help")
+
 -- 外部変更の自動取り込み設定（追加）
 vim.o.autoread = true
 vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {

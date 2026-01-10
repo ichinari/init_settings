@@ -51,7 +51,8 @@ return {
   -- JSXタグ自動閉じ（既存）
   {
     "windwp/nvim-ts-autotag",
-    event = "InsertEnter",
+    event = "BufReadPre",
+    ft = { "html", "javascript", "typescript", "javascriptreact", "typescriptreact", "vue", "svelte", "xml" },
     config = function()
       require("nvim-ts-autotag").setup({})
     end,
@@ -100,6 +101,9 @@ return {
         "lua",
         "vim",
         "vimdoc",
+        "vue",
+        "svelte",
+        "xml",
       },
       highlight = { enable = true },
     },
@@ -120,6 +124,7 @@ return {
       update_focused_file = { enable = true, update_cwd = true },
       renderer = { highlight_git = true },
       git = { enable = true, ignore = false },
+      filters = { git_ignored = false, dotfiles = false },
       view = { width = 32 },
     },
     config = function(_, opts)
@@ -216,5 +221,4 @@ return {
     end,
   },
 }
-
 

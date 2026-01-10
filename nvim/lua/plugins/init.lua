@@ -21,6 +21,16 @@ return {
   -- 追加プラグイン
   ---------------------------------------------------------------------------
 
+  -- JSXタグ自動閉じ
+  {
+    "windwp/nvim-ts-autotag",
+    lazy = false,
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    config = function()
+      require("nvim-ts-autotag").setup({})
+    end,
+  },
+
   -- toggleterm.nvim（ターミナル統合）★重要
   {
     "akinsho/toggleterm.nvim",
