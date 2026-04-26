@@ -44,12 +44,6 @@ create_symlink() {
 }
 
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "📝 WezTerm"
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-create_symlink "$DOTFILES_DIR/wezterm" "$HOME/.config/wezterm"
-
-echo ""
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo "📝 Neovim"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 create_symlink "$DOTFILES_DIR/nvim" "$HOME/.config/nvim"

@@ -111,13 +111,8 @@ require("noice").setup({
       opts = {},
     },
     signature = {
-      enabled = true,
-      auto_open = {
-        enabled = true,
-        trigger = true,
-        luasnip = true,
-        throttle = 50,
-      },
+      enabled = false, -- lspconfig で「行の上」に表示するため noice のシグネチャは使わない
+      auto_open = { enabled = false, trigger = false, luasnip = false, throttle = 50 },
       view = nil,
       opts = {},
     },

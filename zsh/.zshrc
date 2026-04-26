@@ -16,14 +16,6 @@ export NVM_DIR="$HOME/.nvm"
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-# WezTerm: 現在のディレクトリを通知（新しいタブ/ペインで引き継ぎ）
-autoload -Uz add-zsh-hook
-_osc7_cwd() {
-  printf '\033]7;file://%s%s\033\\' "$HOST" "$PWD"
-}
-add-zsh-hook chpwd _osc7_cwd
-_osc7_cwd  # 初回実行
-
 # claudeCodeとcodexのログ解析関連のショートカット
 # 統合エントリポイント: ccu
 # - ccu codex [daily|monthly|session|...] [opts...]
@@ -65,3 +57,24 @@ ccu() {
 # Powerlevel10k theme
 source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# pnpm
+export PNPM_HOME="/Users/ky/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+export PATH="$HOME/.cargo/bin:$PATH"
+
+# notifications
+export PATH="/Users/ky/notifications/bin:$PATH"
+source /Users/ky/notifications/notifications_shell.zsh
+# notifications end
+
+# claude alias
+alias claude='claude'
+alias dclaude='claude --dangerously-skip-permissions'
+# claude alias end
+. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+eval "$(direnv hook zsh)"
