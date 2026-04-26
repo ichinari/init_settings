@@ -21,13 +21,19 @@ return {
   -- 追加プラグイン
   ---------------------------------------------------------------------------
 
-  -- JSXタグ自動閉じ
+  -- JSX/HTML タグ自動閉じ（<p> の > で </p> が挿入される）
   {
     "windwp/nvim-ts-autotag",
     lazy = false,
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = function()
-      require("nvim-ts-autotag").setup({})
+      require("nvim-ts-autotag").setup({
+        opts = {
+          enable_close = true,
+          enable_rename = true,
+          enable_close_on_slash = false,
+        },
+      })
     end,
   },
 
@@ -44,6 +50,7 @@ return {
   -- winresizer（ウィンドウサイズ調整）
   {
     "simeji/winresizer",
+    lazy = false,
     config = function()
       require "configs.winresizer"
     end,
@@ -204,5 +211,7 @@ return {
       require("alpha").setup(opts)
     end,
   },
-}
 
+  -- GitHub Copilot（補完 + チャット）
+  unpack(require("plugins.copilot")),
+}

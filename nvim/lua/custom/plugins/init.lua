@@ -22,28 +22,19 @@ return {
     end,
   },
 
-  -- LSP本体設定（tsserver）
+  -- LSP本体設定（vtsls を Mason で導入）
   {
     "neovim/nvim-lspconfig",
     dependencies = {
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
+      "yioneko/nvim-vtsls",
     },
     config = function()
-      -- configs/lspconfig.lua に分離している場合は require でもOK
-      -- require("configs.lspconfig")
       require("mason").setup({})
       require("mason-lspconfig").setup({
-        ensure_installed = { "tsserver" },
+        ensure_installed = { "vtsls", "html", "cssls", "tailwindcss" },
         automatic_installation = true,
-      })
-
-      local lspconfig = require("lspconfig")
-      lspconfig.tsserver.setup({
-        on_attach = function(client, bufnr)
-          -- tsserverのフォーマットは無効化（Prettier/Biomeを使う前提）
-          client.server_capabilities.documentFormattingProvider = false
-        end,
       })
     end,
   },

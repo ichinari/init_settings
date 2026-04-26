@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//nix/store/**)",
+      "Read(//Users/ky/.config/**)",
+      "Read(//Users/ky/**)",
+      "Read(//etc/nix/**)",
+      "Bash(darwin-rebuild --list-generations)",
+      "Bash(cp:*)",
+      "Bash(home-manager generations:*)"
+    ]
+  }
+}
